@@ -9,3 +9,5 @@ pub trait Jam: Sized {
     where
         W: Write;
 }
+
+mod integers;
