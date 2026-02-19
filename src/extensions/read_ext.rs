@@ -1,7 +1,6 @@
 use std::io::{self, Read};
 
-#[allow(dead_code)]
-pub(crate) trait ReadExt {
+pub trait ReadExt {
     fn read_u8(&mut self) -> io::Result<u8>;
     fn read_signed_varint(&mut self) -> io::Result<i64>;
     fn read_unsigned_varint(&mut self) -> io::Result<u64>;

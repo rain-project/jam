@@ -1,7 +1,6 @@
 use std::io::{self, Write};
 
-#[allow(dead_code)]
-pub(crate) trait WriteExt {
+pub trait WriteExt {
     fn write_u8(&mut self, value: u8) -> io::Result<()>;
     fn write_signed_varint(&mut self, value: i64) -> io::Result<()>;
     fn write_unsigned_varint(&mut self, value: u64) -> io::Result<()>;

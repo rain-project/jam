@@ -1,4 +1,5 @@
-mod extensions;
+pub mod extensions;
+
 mod jam;
 
 pub use self::jam::Jam;
