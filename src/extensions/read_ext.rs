@@ -21,7 +21,7 @@ where
 
     fn read_signed_varint(&mut self) -> io::Result<i64> {
         let unsigned = self.read_unsigned_varint()?;
-        Ok(((unsigned >> 1) as i64) ^ (-((unsigned & 1) as i64)))
+        Ok(((unsigned >> 1) as i64) ^ (-((unsigned & 1) as i64))) // ZigZag decoding
     }
 
     fn read_unsigned_varint(&mut self) -> io::Result<u64> {

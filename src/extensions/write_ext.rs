@@ -16,7 +16,7 @@ where
     }
 
     fn write_signed_varint(&mut self, value: i64) -> io::Result<()> {
-        let unsigned = ((value >> 63) ^ (value << 1)) as u64;
+        let unsigned = ((value >> 63) ^ (value << 1)) as u64; // ZigZag encoding
         self.write_unsigned_varint(unsigned)
     }
 
