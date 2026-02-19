@@ -39,3 +39,29 @@ where
         Ok(value)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::extensions::WriteExt;
+    use std::{cmp::max, iter};
+
+    #[test]
+    fn bijection() {
+        let mut value = 0;
+
+        loop {
+            let mut buffer = Vec::new();
+            buffer.write_varint(value).unwrap();
+            buffer.extend(iter::repeat_with(rand::random::<u8>).take(rand::random_range(0..32)));
+
+            assert_eq!(buffer.as_slice().read_varint().unwrap(), value);
+
+            if value == u64::MAX {
+                break;
+            }
+
+            value = max(value.saturating_add(value / 16), value + 1);
+        }
+    }
+}
