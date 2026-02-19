@@ -3,6 +3,10 @@ name = "jam"
 version = "0.1.0"
 edition = "2024"
 
+[[bench]]
+name = "varints"
+harness = false
+
 [dependencies]
 
 [dev-dependencies]
