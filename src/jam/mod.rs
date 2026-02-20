@@ -11,4 +11,5 @@ pub trait Jam: Sized {
 }
 
 mod collections;
+mod enums;
 mod integers;
