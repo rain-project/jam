@@ -10,4 +10,5 @@ pub trait Jam: Sized {
         W: Write;
 }
 
+mod collections;
 mod integers;
