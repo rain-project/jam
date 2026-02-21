@@ -8,14 +8,14 @@ impl<T, const N: usize> Jam for [T; N]
 where
     T: Jam,
 {
-    fn read_from<R>(reader: &mut R) -> io::Result<[T; N]>
+    fn decode_from<R>(reader: &mut R) -> io::Result<[T; N]>
     where
         R: Read,
     {
         let mut values: [MaybeUninit<T>; N] = [const { MaybeUninit::uninit() }; N];
 
         for index in 0..N {
-            match T::read_from(reader) {
+            match T::decode_from(reader) {
                 Ok(value) => {
                     values[index].write(value);
                 }
@@ -37,12 +37,12 @@ where
         Ok(values)
     }
 
-    fn write_into<W>(&self, writer: &mut W) -> io::Result<()>
+    fn encode_unstable_into<W>(&self, writer: &mut W) -> io::Result<()>
     where
         W: Write,
     {
         for value in self {
-            value.write_into(writer)?;
+            value.encode_unstable_into(writer)?;
         }
 
         Ok(())
@@ -53,29 +53,29 @@ impl<T> Jam for Vec<T>
 where
     T: Jam,
 {
-    fn read_from<R>(reader: &mut R) -> io::Result<Vec<T>>
+    fn decode_from<R>(reader: &mut R) -> io::Result<Vec<T>>
     where
         R: Read,
     {
-        let length = usize::read_from(reader)?;
+        let length = usize::decode_from(reader)?;
         let mut values = Vec::with_capacity(length);
 
         for _ in 0..length {
-            let value = T::read_from(reader)?;
+            let value = T::decode_from(reader)?;
             values.push(value);
         }
 
         Ok(values)
     }
 
-    fn write_into<W>(&self, writer: &mut W) -> io::Result<()>
+    fn encode_unstable_into<W>(&self, writer: &mut W) -> io::Result<()>
     where
         W: Write,
     {
-        self.len().write_into(writer)?;
+        self.len().encode_unstable_into(writer)?;
 
         for value in self {
-            value.write_into(writer)?;
+            value.encode_unstable_into(writer)?;
         }
 
         Ok(())

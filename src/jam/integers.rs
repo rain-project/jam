@@ -5,7 +5,7 @@ use crate::{
 use std::io::{self, Read, Write};
 
 impl Jam for i8 {
-    fn read_from<R>(reader: &mut R) -> io::Result<Self>
+    fn decode_from<R>(reader: &mut R) -> io::Result<Self>
     where
         R: Read,
     {
@@ -13,7 +13,7 @@ impl Jam for i8 {
         Ok(byte as i8)
     }
 
-    fn write_into<W>(&self, writer: &mut W) -> io::Result<()>
+    fn encode_unstable_into<W>(&self, writer: &mut W) -> io::Result<()>
     where
         W: Write,
     {
@@ -22,14 +22,14 @@ impl Jam for i8 {
 }
 
 impl Jam for u8 {
-    fn read_from<R>(reader: &mut R) -> io::Result<Self>
+    fn decode_from<R>(reader: &mut R) -> io::Result<Self>
     where
         R: Read,
     {
         reader.read_u8()
     }
 
-    fn write_into<W>(&self, writer: &mut W) -> io::Result<()>
+    fn encode_unstable_into<W>(&self, writer: &mut W) -> io::Result<()>
     where
         W: Write,
     {
@@ -40,7 +40,7 @@ impl Jam for u8 {
 macro_rules! signed_impl {
     ($type: ty) => {
         impl Jam for $type {
-            fn read_from<R>(reader: &mut R) -> io::Result<Self>
+            fn decode_from<R>(reader: &mut R) -> io::Result<Self>
             where
                 R: Read,
             {
@@ -50,7 +50,7 @@ macro_rules! signed_impl {
                     .map_err(|_| io::ErrorKind::InvalidData.into())
             }
 
-            fn write_into<W>(&self, writer: &mut W) -> io::Result<()>
+            fn encode_unstable_into<W>(&self, writer: &mut W) -> io::Result<()>
             where
                 W: Write,
             {
@@ -63,7 +63,7 @@ macro_rules! signed_impl {
 macro_rules! unsigned_impl {
     ($type: ty) => {
         impl Jam for $type {
-            fn read_from<R>(reader: &mut R) -> io::Result<Self>
+            fn decode_from<R>(reader: &mut R) -> io::Result<Self>
             where
                 R: Read,
             {
@@ -73,7 +73,7 @@ macro_rules! unsigned_impl {
                     .map_err(|_| io::ErrorKind::InvalidData.into())
             }
 
-            fn write_into<W>(&self, writer: &mut W) -> io::Result<()>
+            fn encode_unstable_into<W>(&self, writer: &mut W) -> io::Result<()>
             where
                 W: Write,
             {
