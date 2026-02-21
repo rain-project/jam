@@ -26,3 +26,4 @@ mod arrays;
 mod collections;
 mod integers;
 mod string;
+mod tuples;
