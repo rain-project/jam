@@ -29,7 +29,7 @@ macro_rules! signed_implementations {
     };
 }
 
-signed_implementations!(i16, i32, i64);
+signed_implementations!(i16, i32, i64, isize);
 
 impl Encode for u8 {
     fn encode_unstable_into<W>(&self, writer: &mut W) -> io::Result<()>
@@ -59,4 +59,4 @@ macro_rules! unsigned_implementations {
     };
 }
 
-unsigned_implementations!(u16, u32, u64);
+unsigned_implementations!(u16, u32, u64, usize);
