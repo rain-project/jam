@@ -1,3 +1,4 @@
+pub mod derive;
 pub mod extensions;
 
 mod jam;
