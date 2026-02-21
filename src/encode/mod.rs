@@ -21,3 +21,5 @@ pub trait StableEncode: Encode {
         self.encode_unstable_into(writer)
     }
 }
+
+mod integers;
