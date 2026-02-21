@@ -13,3 +13,5 @@ pub trait PartialJam {
     where
         W: Write;
 }
+
+mod collections;
