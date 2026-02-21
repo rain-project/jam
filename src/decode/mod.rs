@@ -35,3 +35,5 @@ where
         <Self as PartialDecode>::decode_from(reader)
     }
 }
+
+mod integers;
