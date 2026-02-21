@@ -22,4 +22,5 @@ pub trait StableEncode: Encode {
     }
 }
 
+mod arrays;
 mod integers;
