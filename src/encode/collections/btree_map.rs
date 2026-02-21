@@ -26,7 +26,7 @@ where
 
 impl<K, V> StableEncode for BTreeMap<K, V>
 where
-    K: Encode,
-    V: Encode,
+    K: StableEncode,
+    V: StableEncode,
 {
 }
