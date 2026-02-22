@@ -36,4 +36,5 @@ where
     }
 }
 
+mod arrays;
 mod integers;
