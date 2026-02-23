@@ -1,31 +1,36 @@
-use crate::{Encode, StableEncode};
-use std::io::{self, Write};
+use crate::PartialDecode;
+use std::io::{self, Read};
 
 macro_rules! arity_implementation {
+
     ($($type: ident), *) => {
         #[allow(non_snake_case)]
-        impl <$($type), *> Encode for ($($type), *)
+        impl <$($type), *> PartialDecode for ($($type), *)
         where
-            $($type: Encode), *
+        $($type: PartialDecode), *
         {
-            fn encode_unstable_into<W>(&self, writer: &mut W) -> io::Result<()>
-            where
-                W: Write,
-            {
-                let ($($type), *) = self;
+            type Partial = ($($type::Partial), *);
 
+            fn decode_from<R>(reader: &mut R) -> io::Result<($($type::Partial), *)>
+            where
+                R: Read
+            {
                 $(
-                    $type.encode_unstable_into(writer)?;
+                    let $type = $type::decode_from(reader)?;
                 )*
 
-                Ok(())
+                Ok(($($type), *))
             }
-        }
 
-        impl <$($type), *> StableEncode for ($($type), *)
-        where
-            $($type: StableEncode), *
-        {
+            fn complete(partial: ($($type::Partial), *)) -> ($($type), *) {
+                let ($($type), *) = partial;
+
+                $(
+                    let $type = $type::complete($type);
+                )*
+
+                ($($type), *)
+            }
         }
     };
 }

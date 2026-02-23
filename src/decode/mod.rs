@@ -39,3 +39,4 @@ where
 mod arrays;
 mod integers;
 mod string;
+mod tuples;
