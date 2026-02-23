@@ -8,6 +8,7 @@ name = "varints"
 harness = false
 
 [dependencies]
+jam_derive = { path = "./jam_derive" }
 
 [dev-dependencies]
 criterion = { version = "0.8.2" }
